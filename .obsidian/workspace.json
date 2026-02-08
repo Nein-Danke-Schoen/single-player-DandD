@@ -164,19 +164,9 @@
               "icon": "lucide-list",
               "title": "Gliederung von Aufgabe"
             }
-          },
-          {
-            "id": "16960229e5105975",
-            "type": "leaf",
-            "state": {
-              "type": "git-view",
-              "state": {},
-              "icon": "git-pull-request",
-              "title": "Source Control"
-            }
           }
         ],
-        "currentTab": 5
+        "currentTab": 4
       }
     ],
     "direction": "horizontal",
