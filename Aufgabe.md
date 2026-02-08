@@ -24,3 +24,4 @@ Schreibe ein kleines Konsolen‑Programm, das ein interaktives Text‑Adventure 
     
     - Das Programm muss auf falsche Eingaben (Rechtschreibfehler, unbekannte Richtungen) reagieren, ohne abzustürzen.
     - Verwende klare Fehlermeldungen und zeige ggf. die aktuelle Raum­beschreibung erneut an.
+    - test
