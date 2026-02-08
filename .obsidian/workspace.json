@@ -11,13 +11,14 @@
             "id": "4f3a626e41fe970d",
             "type": "leaf",
             "state": {
-              "type": "bases",
+              "type": "markdown",
               "state": {
-                "file": "Aufbau des ganzen.base",
-                "viewName": "Tabelle"
+                "file": "Aufgabe.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-table",
-              "title": "Aufbau des ganzen"
+              "icon": "lucide-file",
+              "title": "Aufgabe"
             }
           }
         ]
@@ -155,13 +156,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Aufbau des ganzen.base",
+                "file": "Aufgabe.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Gliederung von Aufbau des ganzen"
+              "title": "Gliederung von Aufgabe"
             }
           },
           {
@@ -193,10 +194,11 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "16960229e5105975",
+  "active": "4f3a626e41fe970d",
   "lastOpenFiles": [
-    "Unbenannt.base",
+    "Aufgabe.md",
     "Aufbau des ganzen.base",
+    "Unbenannt.base",
     "Willkommen.md",
     "Unbenannt.canvas",
     "Neuer Link.md"
