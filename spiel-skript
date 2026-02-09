@@ -1,2 +1,25 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+
+def startdialog():
+    Anfangsdialog = "Wilkommen zu dieser kleinen D&D Kampange."
+    print(Anfangsdialog)
+    Menu = input(f"Start Game\nEinstellungen\nBeenden").strip()
+    try:
+        if Menu == "Start":
+            return startraum
+        elif Menu == "Einstellungen":
+            return einstellungen
+        else:
+            print("Spiel wird beendet...")
+            return
+    except:
+        print("Bitte eine valide Eingaben geben!!\n")
+
+
+
+def main():
+    print(startdialog)
+
+if __name__ == "__main__":
+    main()
