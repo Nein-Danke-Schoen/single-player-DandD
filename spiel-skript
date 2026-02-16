@@ -1,20 +1,55 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-def startdialog():
-    Anfangsdialog = "Wilkommen zu dieser kleinen D&D Kampange."
-    print(Anfangsdialog)
+import json
+import pathlib
+from typing import Any, Dict, List
+
+class Charakter():
+    """Dient dazu den charakter zu definieren"""
+
+    def __init__(self, hp=100, grund_dmg=5):
+        self.hp = hp
+        self.grund_dmg = grund_dmg
+        self.gewaelte_waffe = None
+
+    @property 
+    def dmg(self):
+        """Gesamtschaden des Charakters, Grundschaden plus Waffenschaden"""
+        if self.gewaelte_waffe:
+            return self.grund_dmg + self.gewaelte_waffe
+        return self.grund_dmg
+
+    def ruestet_waffe():
+        self.gewaelte_waffe = waffe
+
+class Waffen():
+    """Dazu da um Waffen zu erstellen"""
+
+    def __init__(self, dmg, name):
+        self.dmg = dmg
+        self.name = name
+
+    eisenschwert = Waffen(5, "Eisenschwert")
+    
+
+def startdialog(): 
+    print("Wilkommen zu dieser kleinen D&D Kampange.")
     Menu = input(f"Start Game\nEinstellungen\nBeenden").strip()
     try:
         if Menu == "Start":
-            return startraum
+            return startraum()
         elif Menu == "Einstellungen":
-            return einstellungen
+            print("Zurzeit nicht vorhanden...\nKommt bestimmt irgendwann\n\n")
+            return startdialog() #einstellungen()
         else:
             print("Spiel wird beendet...")
             return
     except:
         print("Bitte eine valide Eingaben geben!!\n")
+
+def startraum():
+    print("")
 
 
 
