@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "d30f59014af99583",
+        "id": "ee21228e20c45c42",
         "type": "tabs",
         "children": [
           {
-            "id": "71ba69f3a6b90df7",
+            "id": "8e76ff02f9c18391",
             "type": "leaf",
             "state": {
               "type": "excalidraw",
@@ -154,13 +154,12 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "Assets/Karte.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Gliederung von Karte"
+              "title": "Gliederung"
             }
           }
         ],
@@ -168,7 +167,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -182,8 +182,9 @@
       "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "71ba69f3a6b90df7",
+  "active": "8e76ff02f9c18391",
   "lastOpenFiles": [
+    "Assets/beschreibung-Hausesaltermann-start.txt",
     "Assets/Karte.md",
     "Assets/Vorangehensweiße.md",
     "Excalidraw",
