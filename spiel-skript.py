@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import json
+import yaml
 from pathlib import Path
 import random
+import sys
+from typing import Optional
 
 class Waffen():
-    """Dazu da um Waffen zu erstellen"""
-
+    """Definiert Waffen."""
     def __init__(self, dmg: int, name: str):
         self.dmg = dmg
         self.name = name
@@ -37,8 +38,27 @@ stahlschwert   = Waffen(10, "Stahlschwert")
 himmelschwert  = Waffen(20, "Himmelschwert")
 
 # -------------------------------------------------
+# NPC-Dialoge einlesen und weitergeben
+def yamlopen():
+    """ YAML Datei wird eingelesen und Variable loaded weitergegeben"""
+    try:
+        with open (Path(__file__).parent / "Assets" / "NPCdialoge.yaml") as datei:
+            loaded = (yaml.safe_load(datei))
+        if loaded:
+            return(loaded)
+    except Exception:
+        print(Exception)
+        sys.exit(1)
+""" Beispiel zur ausgabe eines bestimmten Dialoges:
+    textausgabe = yamlopen()
+    text = textausgabe.get(".....")  #hier einfügen welchen textblock man will
+    print(text)
+"""
+
+# -------------------------------------------------
 # NPC-Charaktere 
 def alterMann(status):
+    #Startet einen Dialog mit dem alten Mann jenachdem wo man sich befindet(Status)
     if status == 1:
         print("Der alte Mann schaut dich an...\nMhh ein Neuer, sieht man selten. Was willst du?")
     while True:
@@ -46,27 +66,25 @@ def alterMann(status):
             user_wahl = input("Erzäle mir mehr über diesen Ort: 1\nGib mir ein Schwert: 2\nNichts ich gehe schon: 3\n").strip().lower()
             geschick = random.randint(1, 20)
             if user_wahl == "1":
+                textausgabe = yamlopen()
                 print(f"Du Rollst eine {geschick}")
-                if geschick <= 5:
-                    print(f"Dir erzäle ich gar nichts. Der alte Mann schaut dich genervt an...\n")
-                    return startraum()
-                elif geschick >= 5 and geschick <= 15:
-                    datei = Path(__file__).parent / "Assets" / "beschreibung-Hausesaltermann-start-mittel.txt"
-                    try:
-                        # Datei komplett einlesen
-                        inhalt = datei.read_text(encoding="utf-8")
-                        print(inhalt)
-                    except FileNotFoundError:
-                        print(f"Datei nicht gefunden: {datei}")
-                else:
-                    datei = Path(__file__).parent / "Assets" / "beschreibung-Hausesaltermann-start.txt"
-                    try:
-                        # Datei komplett einlesen
-                        inhalt = datei.read_text(encoding="utf-8")
-                        print(inhalt)
-                    except FileNotFoundError:
-                        print(f"Datei nicht gefunden: {datei}")
-        except Exception:
+                try:
+                    if geschick <= 5:
+                        text = textausgabe.get("altermannstartschlecht")
+                        print(text)
+                        return startraum()
+                    elif geschick >= 5 and geschick <= 15:
+                        text = textausgabe.get("altermannstartmittel")
+                        print(text)
+                        return startraum()
+                    else:
+                        text = textausgabe.get("altermannstartgut")
+                        print(text)
+                        return startraum()
+                except Exception as e:
+                    print(e)
+                    continue
+        except Exception as e:
             print("Bitte eine Valide Eingabe machen!!!")
     else:
         return startraum()
