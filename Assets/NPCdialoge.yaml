@@ -1,16 +1,17 @@
-altermannstartschlecht: |
-  Dir erzäle ich gar nichts. Der alte Mann schaut dich genervt an...
+altermannstart1schlecht: |
+  "Dir erzäle ich gar nichts." 
+  Der alte Mann schaut dich genervt an...
 
-altermannstartmittel: |
-  Dies ist kein gewöhnliches Haus — es ist ein Dungeon. Schatten zucken in den Ecken, 
+altermannstart1mittel: |
+  "Dies ist kein gewöhnliches Haus, es ist ein Dungeon. Schatten zucken in den Ecken, 
   Türen öffnen auf enge Gänge, die tiefer ins Herz führen.
   Du wirst Gegnern begegnen: verhüllte Wächter, knarrende Puppen, schleimige Gestalten 
   aus den Kellerwänden. Je weiter wir gehen, desto härter werden die Prüfungen; die Luft kühlt, 
   Schritte hallen länger, und Fallen werden tödlich. Es heißt, irgendwo im Haus 
-  tief unten gibt es einen Endboss, dessen Blick man spüren soll wenn man im hier ist.
+  tief unten gibt es einen Endboss, dessen Blick man spüren soll wenn man im hier ist."
 
-altermannstartgut: |
-  Das hier ist kein gewöhnliches Haus — es ist ein Dungeon. Schon in der Eingangshalle bewegen sich Schatten in den Ecken,
+altermannstart1gut: |
+  "Das hier ist kein gewöhnliches Haus, es ist ein Dungeon. Schon in der Eingangshalle bewegen sich Schatten in den Ecken,
   Gänge hinter den Türen verengen sich und führen tiefer ins Herz des Gebäudes. 
   Du wirst Gegnern begegnen: verhüllte Wächter mit bleichen Gesichtern, knarrende Puppen, schleimige Gestalten, 
   die aus feuchten Kellerwänden kriechen. Je weiter wir vordringen, desto härter werden die Prüfungen. Die Luft wird kälter, 
@@ -21,4 +22,37 @@ altermannstartgut: |
   Und dann gibt es noch das Gerücht vom Endboss: Ein Wesen, das tief unten hausen soll, 
   einmal Mensch, nun von der Hausmacht verdreht — das am Ende alles zusammenhält. 
   Manche Leute sagen, wer das Haus betritt, spürt bereits sein Auge auf sich gerichtet. 
-  Wir stehen im ersten Raum, dem Startraum, jede Tür eine Einladung, jeder Windhauch eine Warnung.
+  Wir stehen im ersten Raum, dem Startraum, jede Tür eine Einladung, jeder Windhauch eine Warnung."
+
+altermannstart2schlecht: |
+  "Dir gebe ich absolut gar nichts, Neuer. Besser wenn du gehst."
+
+altermannstart2mittel: |
+  "Was ich dir geben kann, ist dieses alte Schwert, das ich zu Beginn meiner Laufbahn geführt habe…"
+  Der alte Mann reicht dir das stumpfe, abgenutzte Schwert, das mehr Rost als Stahl trägt.
+  "Nimm’s, wenn du willst, ich hab’ genug damit zu tun, dich hier allein zu lassen.""
+
+altermannstart2gut: |
+  "Du bist also bereit, dich in die finsteren Hallen dieses Dungeons zu wagen.
+  Was ich dir überreichen kann, ist ein Schwert, das ich selbst in meinen jüngeren Tagen geschmiedet habe, 
+  als das Blut noch heißer und die Nächte kürzer waren."
+  Der alte Mann legt dir das Schwert vorsichtig in die Hand, lässt die Klinge im schwachen Licht des Eingangsraums aufblitzen...
+  "Dieses Stück hat mich durch so manche enge Gasse und dunkle Kammer getragen.
+  Ich erinnere mich an die erste Begegnung mit den bleichen Wächtern, ihre Gesichter waren blass wie das Mondlicht, 
+  doch das Metall in meiner Hand schnitt durch ihre Rüstung, als wäre es nichts weiter als Papier.
+  Jeder Schritt hier hallt wider, jede Falle ist ein Flüstern des Hauses, das uns testen will, Nimm dieses Schwert,
+  und geh weiter. Es wird dir mehr nützen als das rostige Stück, das ich einst vergaß. Doch sei gewarnt, das Haus hat seine eigenen Pläne...
+  Mit einem letzten Blick, halb Stolz, halb Müdigkeit, fügt er hinzu
+  „Und nun... lass mich endlich meine Ruhe haben.“
+
+altermannstart3schlecht: |
+  „Na gut, dann verschwinde. Viel Glück, du wirst es sowieso nicht lange schaffen.“
+
+altermannstart3mittel: |
+  „Weg mit dir, dann. Aber vergiss nicht: Auch ein alter Knochen kann noch ein gutes Ziel treffen.“
+
+altermannstart3gut: |
+  „Also geh, wenn du musst. Aber denk dran, dass selbst ein müder Wanderer hier nicht allein ist.
+  Wenn du weitergehst, schau doch bei den beiden Gestalten dort drüben vorbei, sie kennen ein paar versteckte Pfade, 
+  die dir das Weiterkommen erleichtern können.
+  Und vergiss nicht: Jeder Schritt, den du machst, bringt dich näher an das Ziel, selbst wenn das Haus dich noch prüft.“
