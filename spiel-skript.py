@@ -10,10 +10,6 @@ from dataclasses import dataclass
 
 held = charakter()
 
-# -------------------------------------------------
-# Menuvariabeln anlegen und verwalten
-einstellungen_anzeigen = True
-
 @dataclass
 class Waffen():
     """Definiert Waffen."""
@@ -70,8 +66,10 @@ himmelschwert           = Waffen(dmg=20, name="Himmelschwert")
 
 # -------------------------------------------------
 # Iteminstanzen anlegen
-ringdesschadens = Items(name="Ring des Schadens", dmg=0, hp=20)
-ringdeslebens = Items(name="Ring des Lebens", dmg=50, hp=0)
+anfaengerring = Items(name="Ring des Anfängers", dmg=5, hp=10)
+silberring = Items(name="Silberring", dmg=10, hp=15)
+ringdesschadens = Items(name="Ring des Schadens", dmg=20, hp=0)
+ringdeslebens = Items(name="Ring des Lebens", dmg=0, hp=50)
 thering = Items(name="Der Ring", dmg=50, hp=20)
 
 # -------------------------------------------------
@@ -171,11 +169,66 @@ def alterMann(status):
         print("Du solltest noch gar nicht hier sein (besser: der Teil wurde noch nicht gemacht :3)...\nWie hast du das gemacht?\nAber naja, zurück mit dir in den Startraum!")
         return startraum()
 
+# Zwei Gestalten
+menuzweigestalten2  = {
+    "1": {"text": "Wer seid ihr zwei?",                         "active": True},
+    "2": {"text": "Könntet ihr mich eventuell unterstützen",    "active": True},
+}
+
+def zweigestaltenmenu2():
+    lines = [f"{k}: {v['text']}" for k, v in menuzweigestalten2.items() if v["active"]]
+    return "\n".join(lines) + "\n> "
+
+def togglezweigestaltenmenu2(key: str):
+     if key in startraummenu:
+        startraummenu[key]["active"] = False
+
+def zweigestalten(status: int):
+    if status == 1:
+        print("Du verziest dich besser...\nWenn nicht wird dir es gleich nicht mehr so gut gehen.\n Du entfernst du langsam wieder.")
+    elif status == 2:
+        print("Mmmhhh, der alte mag dich wohl...\nWas willst du?")
+        user_wahl = input(zweigestaltenmenu2).strip()
+        geschick = random.randint(1, 20)
+        textblock = yamlopen()
+        while any(v["active"] for v in menuzweigestalten2.values()):
+            if user_wahl == "1":
+                togglezweigestaltenmenu2("1")
+                print(f"Du rollst eine {geschick}")
+                if geschick <= 5:
+                    togglestartraummenu("3")
+                    print(textblock.get("zweigestalten2_1schlecht"))
+                    print("\nDu entfernst dich wieder")
+                    return startraum()
+                elif geschick >5 and geschick <= 15:
+                    print(textblock.get("zweigestalten2_1mittel"))
+                else:
+                    print(textblock.get("zweigestalten2_1gut"))
+            elif user_wahl == "2":
+                togglezweigestaltenmenu2("2")
+                if geschick <= 5:
+                    print(textblock.get("zweigestalten2_2schlecht"))
+                elif geschick >5 and geschick <= 15:
+                    print(textblock.get("zweigestalten2_2mittel"))
+                    ruestet_item(anfaengerring)
+                    print("Du rüstest den Anfängerring aus...")
+                else:
+                    print(textblock.get("zweigestalten2_2gut"))
+                    ruestet_item(silberring)
+                    print("Du rüstest den Silberring aus...")
+            else:
+                print("Platzhalter")
+        print("Ich denke du solltest nun durch die Tür da gehen um deine Reise zu beginnen...")
+
+                    
+
+einstellungen_anzeigen = True
+
 def menu_bauen():
     start_menu = ["Start", "Beenden"]
     if einstellungen_anzeigen:
-        items.insert(1, "Einstellungen")
-    return "\n".join(items) + "\n"
+        start_menu.insert(1, "Einstellungen")
+    return "\n".join(start_menu) + "\n"
 
 def startdialog():
     print("Willkommen zu dieser kleinen D&D Kampagne.") 
@@ -197,19 +250,36 @@ def startdialog():
         except Exception as e:
             print(f"Ein Fehler ist Aufgetreten:\n{e}")
 
+startraummenu = {
+    "1": {"text": "Was willst du tun?",                 "active": True},
+    "2": {"text": "Zum alten Mann gehen",               "active": True},
+    "3": {"text": "Zu den zwei Gestalten gehen",        "active": True},
+    "4": {"text": "Durch die Türe gehen",               "active": True},
+}
+
+def menustartraum():
+    lines = [f"{k}: {v['text']}" for k, v in startraummenu.items() if v["active"]]
+    return "\n".join(lines) + "\n> "
+
+def togglestartraummenu(key: str):
+     if key in startraummenu:
+        startraummenu[key]["active"] = False
+
 def startraum():
-    print("""Du betrittst einen kleinen Raum. Er sieht heruntergekommen aus, in ihm siehst du zwei Tische. An dem linken sitzen zwei mürrisch aussehende Gestalten,
-an dem rechten sitzt ein alte Mann. Am ende des Raumes befindet sich eine Holztür""")
-    while True:
+    print("""Du betrittst einen kleinen Raum. Er sieht heruntergekommen aus, in ihm siehst du zwei Tische. An dem linken sitzen zwei mürrisch aussehende Gestalten,\nan dem rechten sitzt ein alte Mann. Am ende des Raumes befindet sich eine Holztür""")
+    while any(v["active"] for v in menualtermannstatus1.values()):
         try:
-            user_wahl = input("Was willst du tun?\nZum alten Mann gehen: 1\nZu den zwei Gestalten gehen: 2\nDurch die Türe gehen: 3\n").strip()
+            user_wahl = input(menustartraum).strip()
             if user_wahl == "1":
+                #togglestartraummenu("2")
                 print("Du gehst zum alten Mann...")
                 status = 1
                 return alterMann(status)
             elif user_wahl == "2":
+                togglestartraummenu("3")
                 print("Du gehst zu den zwei Gestalten...")
-                return gestalten(start)
+                status = 1
+                return zweigestalten(status)
             else:
                 print("Du gehst zur Türe und öffnest sie...")
                 return raum2()

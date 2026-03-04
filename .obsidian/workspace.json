@@ -4,19 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "ee21228e20c45c42",
+        "id": "183b6d054dc14c76",
         "type": "tabs",
         "children": [
           {
-            "id": "8e76ff02f9c18391",
+            "id": "c28fc9c063c80084",
             "type": "leaf",
             "state": {
-              "type": "excalidraw",
-              "state": {
-                "file": "Assets/Karte.md"
-              },
-              "icon": "excalidraw-icon",
-              "title": "Karte"
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "Neuer Tab"
             }
           }
         ]
@@ -182,7 +180,7 @@
       "obsidian-excalidraw-plugin:New drawing": false
     }
   },
-  "active": "3a3f442c6ee5d830",
+  "active": "25639934f5a9138a",
   "lastOpenFiles": [
     "Verbesserungen.txt",
     "Assets/Karte.md",

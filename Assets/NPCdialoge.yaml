@@ -56,3 +56,45 @@ altermannstart3gut: |
   Wenn du weitergehst, schau doch bei den beiden Gestalten dort drüben vorbei, sie kennen ein paar versteckte Pfade, 
   die dir das Weiterkommen erleichtern können.
   Und vergiss nicht: Jeder Schritt, den du machst, bringt dich näher an das Ziel, selbst wenn das Haus dich noch prüft.“
+
+zweigestalten2_1schlecht: |
+  Mehr über uns erzählen? Das würde dir so passen. Wir werden dir gleich erzählen wie gut wir jemanden unter die Erde befördern können...
+
+zweigestalten2_1mittel: |
+  „Wir haben schon viel gesehen – unser Wesen ist verformt, das Ergebnis jahrhundertlanger Veränderung.“
+
+  „Und doch tragen wir das Gewicht einer Ära, die längst vergangen ist. Unsere Haut trägt die Narben der Zeit, doch unser Blick bleibt wachsam.“
+
+  „Wir wandern seit Äonen durch diese Hallen, immer auf der Suche nach dem Einen, das uns endlich Ruhe geben könnte.“
+
+  „Aber sei gewarnt, Fremder. Misstrauen ist unser ständiger Begleiter – wir haben gelernt, dass jeder Besucher ein neues Rätsel birgt.“
+
+  „Also wähle deine Worte weise, denn wir lauschen und prüfen jede Regung, bevor wir dir weiter zulassen.“
+
+zweigestalten2_1gut: |
+  Aric: „Ich bin Aric, 678 Jahre alt, ein Ghul. Früher war ich einfacher Handwerker, dann zog mich ein altes Ritual in die Schatten. 
+        Jetzt sammle ich Wissen aus zerfallenen Ruinen und spreche nur, wenn ich sicher bin, dass das Wort etwas bewirkt.“
+  
+  Selene: „Selene, 956 Jahre, Vampirin. Einst Gelehrte, jetzt Gefangene eines uralten Fluchs.“
+
+  Aric: „Wir sind auf der suche nach einem Artefakt. Das ‚Herz des Baumes‘, ein uraltes Relikt, 
+        das angeblich die Qual unserer Untoten mildert und Frieden schenkt. Es ist der Kern eines längst vergessenen, 
+        magischen Baumes, tief verborgen und von Rätseln bewacht.“
+
+  Selene: „Der Baum war einst ein Wächter der Erde. Sein Kern wurde aus der physischen Welt gerissen und in einen versiegelten Ort gebracht.“
+
+  Aric: „Ich habe Jahrhunderte damit verbracht, Karten zu entziffern und Ruinen zu durchforsten. Ohne einen Verbündeten wäre das Ziel unerreichbar,
+        doch Vertrauen ist rar.“
+
+zweigestalten2_2schlecht: |
+  "Du willst was von uns? Ganz sicher sicher nicht. Sieh zu das du Land gewinnst."
+
+zweigestalten2_2mittel: |
+  "Mmhh, Unterstützen, aber nur weil der alter dich mag."
+  Die blasse Gestalt holt einen schlicht aussehenden Ring hervor.
+  "Hier nimm, er sollte dir auf deinem Abenteuer helfen"
+
+zweigestalten2_2gut: |
+  "Eigentlich misstraue ich ja allen, bei dir habe ich aber ein eher gutes Gefühl"
+  Ihre Rubin roten Augen richten sich auf ihre Tasch wo sie einen silbernen Ring hervor.
+  "Dieser Ring hat mir am Anfang meiner Reise sher geholfen, dir wird er mit sicherheit auch helfen"
