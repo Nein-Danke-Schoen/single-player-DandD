@@ -72,25 +72,63 @@ thering         = Items(name="Der Ring",            dmg=50, hp=20)
 
 # -------------------------------------------------
 # NPC-Dialoge einlesen und weitergeben
-def yamlopen():
+# -------------------------------------------------
+def yamlopen() -> dict:
     """ YAML Datei wird eingelesen und Variable loaded weitergegeben"""
     try:
         with open (Path(__file__).parent / "Assets" / "NPCdialoge.yaml") as datei:
             loaded = (yaml.safe_load(datei))
         if loaded:
-            return(loaded)
+            return loaded or {}
     except Exception as e:
         print(e)
-        sys.exit(1)
-""" Beispiel zur ausgabe eines bestimmten Dialoges:
-    textausgabe = yamlopen()
-    print(textausgabe.get("hier einfügen welchen textblock man will"))  
-    print(text)
-"""
+        sys.exit(0)
+# -------------------------------------------------
+# NPC-Dialoge ausgeben
+# -------------------------------------------------
+def get_textblock(path: str, data: dict | None = None) -> str | None:
+    """Sucht den Textblock gemäs dem Übergebenen Pfad"""
+    if data is None:
+        data = yamlopen()
+    keys = path.split(".")
+    current = data
+    for key in keys:
+        if isinstance(current, dict) and key in current:
+            current = current[key]
+        else:
+            print(f"Pfad '{path}' nicht gefunden (fehlender Schlüssel: '{key}').",file=sys.stderr,)
+            return None
+    if isinstance(current, str):
+        return current.strip()
+    else:
+        print(f"Der Endwert von '{path}' ist kein Text, sondern ein {type(current).__name__}.",file=sys.stderr,)
+        return None
+
+def textausgabe(textblock: str) -> str:
+    """Gibt den gesuchten Textblock von gettextblock aus"""
+    txt = get_textblock(textblock)
+    if txt is not None:
+        return txt
+    else:
+        print("Kein Text gefunden.", file=sys.stderr)
+
+# -------------------------------------------------
+# Menus bauen und aktivieren/deaktivieren
+# -------------------------------------------------
+def menu_builder(menuname):
+    """Baut das jeweilige Menu dessen Namen übergeben wurde"""
+    lines = [f"{k}: {v['text']}" for k, v in menuname.items() if v["active"]]
+    return "\n".join(lines) + "\n> "
+
+def menu_toggle(menuname, key: str):
+    """Deaktiviert die jeweilige Option im Menu die Übergeben wurde"""
+    if key in menuname:
+        menuname[key]["active"] = False
 
 # -------------------------------------------------
 # NPC-Charaktere
 # -------------------------------------------------
+
 # Alter Mann 
 menualtermannstatus1 = {
     "1": {"text": "Erzähle mir mehr über diesen Ort",   "active": True},
@@ -98,179 +136,146 @@ menualtermannstatus1 = {
     "3": {"text": "Nichts, ich gehe schon",             "active": True},
 }
 
-def altermannstatus1():
-    lines = [f"{k}: {v['text']}" for k, v in menualtermannstatus1.items() if v["active"]]
-    return "\n".join(lines) + "\n> "
-
-def altermannmenu1(key: str):
-     if key in menualtermannstatus1:
-        menualtermannstatus1[key]["active"] = False
-
-def alterMann(status):
+def alterMann(status: int):
     #Startet einen Dialog mit dem alten Mann jenachdem wo man sich befindet(Status)
     if status == 1:
         print("Der alte Mann schaut dich an...\nMhh ein Neuer, sieht man selten. Was willst du?")
-        textausgabe = yamlopen()
         while any(v["active"] for v in menualtermannstatus1.values()):
-            choice = input(altermannstatus1()).strip()
+            choice = input(menu_builder(menualtermannstatus1)).strip()
             if choice not in menualtermannstatus1 or not menualtermannstatus1[choice]["active"]:
                 print("Bitte wähle eine gültige, aktive Nummer.")
-                continue
             if choice == "1":
                 geschick = random.randint(1, 20)
                 print(f"Du Rollst eine {geschick}")
-                altermannmenu1("1")
+                menu_toggle(menualtermannstatus1, "1")
                 try:
                     if geschick <= 5:
-                        print(textausgabe.get("altermannstart1schlecht"))
-                        continue
+                        print(textausgabe("AlterMann.Status_1.Auswahl_1.schlecht"))
                     elif geschick >= 5 and geschick <= 15:
-                        print(textausgabe.get("altermannstart1mittel"))
-                        continue
+                        print(textausgabe("AlterMann.Status_1.Auswahl_1.mittel"))
                     else:
-                        print(textausgabe.get("altermannstart1gut"))
-                        continue
+                        print(textausgabe("AlterMann.Status_1.Auswahl_1.gut"))
                 except Exception as e:
                     print(e)
-                    continue
             elif choice == "2":
                 geschick = random.randint(1, 20)
                 print(f"Du Rollst eine {geschick}")
-                altermannmenu1("2")
+                menu_toggle(menualtermannstatus1, "2")
                 try:
                     if geschick <= 5:
-                        print(textausgabe.get("altermannstart2schlecht"))
-                        continue
+                        print(textausgabe("AlterMann.Status_1.Auswahl_2.schlecht"))
                     elif geschick >= 5 and geschick <= 15:
-                        print(textausgabe.get("altermannstart2mittel"))
+                        print(textausgabe("AlterMann.Status_1.Auswahl_2.mittel"))
+                        print("\nDu rüstest das rostige Eisenschwert aus...")
                         held.ruestet_waffe(rostigeseisenschwert)
-                        continue
                     else:
-                        print(textausgabe.get("altermannstart2gut"))
+                        print(textausgabe("AlterMann.Status_1.Auswahl_2.gut"))
+                        print("\nDu rüstest das Eisenschwert aus...")
                         held.ruestet_waffe(eisenschwert)
-                        continue
                 except Exception as e:
                     print(e)
                     continue
             elif choice == "3":
                 geschick = random.randint(1, 20)
                 print(f"Du Rollst eine {geschick}")
-                altermannmenu1("3")
+                menu_toggle(menualtermannstatus1, "3")
                 if geschick <=5:
-                    print(textausgabe.get("altermannstart3schlecht"))
-                    return startraum(status=2)
+                    print(textausgabe("AlterMann.Status_1.Auswahl_3.schlecht"))
+                    return startraum(2)
                 elif geschick >= 5 and geschick <= 15:
-                    print(textausgabe.get("altermannstart3mittel"))
-                    return startraum(status=2)
+                    print(textausgabe("AlterMann.Status_1.Auswahl_3.mittel"))
+                    return startraum(2)
                 else:
-                    print(textausgabe.get("altermannstart3gut"))
+                    print(textausgabe("AlterMann.Status_1.Auswahl_3.gut"))
                     try:
                         user_wahl = input("Möchtest du bei den zwei gestalten vorbeischauen? (j/n): ").strip().lower()
                         if user_wahl == "j":
                             print("Du gehst zu den beiden Gestalten hinüber...")
                             return zweigestalten(2)
                         else:
-                            print("Du entfernst dich vom alten Mann und richtest deine Augen auf die Tür die in Das Anwesen hineinführt.")
-                            return startraum(status=2)
+                            print("Du entfernst dich vom alten Mann und richtest deine Augen auf die Tür die in das Anwesen hineinführt.")
+                            return startraum(2)
                     except Exception as e:
                         print(e)
                         continue
         print("Ich habe dir nichts zu sagen oder zu geben")
-        return startraum(status=2)
+        return startraum(2)
     else:
         print("Du solltest noch gar nicht hier sein (besser: der Teil wurde noch nicht gemacht :3)...\nWie hast du das gemacht?\nAber naja, zurück mit dir in den Startraum!")
-        return startraum(status=2)
+        return startraum(2)
 
 # Zwei Gestalten
-menuzweigestalten2  = {
+menuzweigestaltenstatus2  = {
     "1": {"text": "Wer seid ihr zwei?",                         "active": True},
     "2": {"text": "Könntet ihr mich eventuell unterstützen",    "active": True},
 }
 
-def zweigestaltenmenu2():
-    lines = [f"{k}: {v['text']}" for k, v in menuzweigestalten2.items() if v["active"]]
-    return "\n".join(lines) + "\n> "
-
-def togglezweigestaltenmenu2(key: str):
-     if key in menuzweigestalten2:
-        menuzweigestalten2[key]["active"] = False
-
 def zweigestalten(status: int):
+    """Startet einen Dialog basierend darauf wo man gerade ist(Status)"""
     if status == 1:
-        print("Du verziest dich besser...\nWenn nicht wird dir es gleich nicht mehr so gut gehen.\n Du entfernst du langsam wieder.")
-        return startraum(status=2)
+        print("Du verziest dich besser...\nWenn nicht wird dir es gleich nicht mehr so gut gehen.\n\nDu entfernst du langsam wieder.")
+        return startraum(2)
     elif status == 2:
-        print("'Mmmhhh, der alte mag dich wohl...'\n'Was willst du?'")
-        user_wahl = input(zweigestaltenmenu2()).strip()
-        textblock = yamlopen()
-        while any(v["active"] for v in menuzweigestalten2.values()):
+        print("Mmmhhh, der alte mag dich wohl...\n'Was willst du?")
+        user_wahl = input(menu_builder(menuzweigestaltenstatus2)).strip()
+        while any(v["active"] for v in menuzweigestaltenstatus2.values()):
             if user_wahl == "1":
-                togglezweigestaltenmenu2("1")
+                menu_toggle(menuzweigestaltenstatus2, "1")
                 geschick = random.randint(1, 20)
                 print(f"Du rollst eine {geschick}")
                 if geschick <= 5:
-                    print(textblock.get("zweigestalten2_1schlecht"))
+                    print(textausgabe("ZweiGestalten.Status_2.Auswahl_1.schlecht"))
                     print("\nDu entfernst dich wieder")
-                    return startraum(status=2)
+                    return startraum(2)
                 elif geschick >5 and geschick <= 15:
-                    print(textblock.get("zweigestalten2_1mittel"))
-                    continue
+                    print(textausgabe("ZweiGestalten.Status_2.Auswahl_1.mittel"))
                 else:
-                    print(textblock.get("zweigestalten2_1gut"))
-                    continue
+                    print(textausgabe("ZweiGestalten.Status_2.Auswahl_1.gut"))
             elif user_wahl == "2":
                 geschick = random.randint(1, 20)
                 print(f"Du rollst eine {geschick}")
-                togglezweigestaltenmenu2("2")
+                menu_toggle(menuzweigestaltenstatus2, "2")
                 if geschick <= 5:
-                    print(textblock.get("zweigestalten2_2schlecht"))
-                    continue
+                    print(textausgabe("ZweiGestalten.Status_2.Auswahl_2.schlecht"))
                 elif geschick >5 and geschick <= 15:
-                    print(textblock.get("zweigestalten2_2mittel"))
+                    print(textausgabe("ZweiGestalten.Status_2.Auswahl_2.mittel"))
                     held.ruestet_item(anfaengerring)
                     print("Du rüstest den Anfängerring aus...")
-                    continue
                 else:
-                    print(textblock.get("zweigestalten2_2gut"))
+                    print(textausgabe("ZweiGestalten.Status_2.Auswahl_2.gut"))
                     held.ruestet_item(silberring)
                     print("Du rüstest den Silberring aus...")
                     continue
             else:
-                print("Platzhalter")
+                print("Bitte eine valide Eingabe machen!!")
                 return zweigestalten(2)
-        print("Ich denke du solltest nun durch die Tür da gehen um deine Reise zu beginnen...")
-        return startraum(status=2)
+        print("Wir denken du solltest nun durch die Tür da gehen um deine Reise zu beginnen...")
+        return startraum(2)
     else:
         print("Platzhalter")
-        return startraum(status=2)
-
-                    
+        return startraum(2)       
 
 einstellungen_anzeigen = True
-
-def menu_bauen():
-    start_menu = ["Start", "Beenden"]
-    if einstellungen_anzeigen:
-        start_menu.insert(1, "Einstellungen")
-    return "\n".join(start_menu) + "\n"
+startmenu = {
+    "1":    {"text": "Start",           "active": True},
+    "2":    {"text": "Einstellungen",   "active": True},
+    "3":    {"text": "Beenden",         "active": True}
+}
 
 def startdialog():
     print("Willkommen zu dieser kleinen D&D Kampagne.") 
-    while True:
-        menu_text = menu_bauen()
-        user_input = input(menu_text).strip().lower()
+    while any(v["active"] for v in startmenu.values()):
+        user_input = input(menu_builder(startmenu)).strip()
         try:
-            if user_input == "start":
+            if user_input == "1":
                 status = 1
-                startraum(status=2)
-                break
-            elif user_input == "einstellungen":
+                startraum(status=1)
+            elif user_input == "2":
                 print("Zurzeit nicht vorhanden...\nKommt bestimmt irgendwann\n\n")
-                global einstellungen_anzeigen
-                einstellungen_anzeigen = False
-            elif user_input == "beenden":
+                menu_toggle(startmenu, "2")
+            elif user_input == "3":
                 print("Spiel wird beendet...")
-                break
+                sys.exit(0)
             else:
                 print("Bitte eine valide Eingaben geben!!\n")
         except Exception as e:
@@ -283,34 +288,26 @@ startraummenu = {
     "3": {"text": "Durch die Türe gehen",               "active": True},
 }
 
-def menustartraum():
-    lines = [f"{k}: {v['text']}" for k, v in startraummenu.items() if v["active"]]
-    return "\n".join(lines) + "\n> "
-
-def togglestartraummenu(key: str):
-     if key in startraummenu:
-        startraummenu[key]["active"] = False
-
 def startraum(status: int):
     if status == 1:
-        print("""Du betrittst einen kleinen Raum. Er sieht heruntergekommen aus, in ihm siehst du zwei Tische. An dem linken sitzen zwei mürrisch aussehende Gestalten,\nan dem rechten sitzt ein alte Mann. Am ende des Raumes befindet sich eine Holztür""")
+        print("""Du betrittst einen kleinen Raum. Er sieht heruntergekommen aus, in ihm siehst du zwei Tische. An dem linken sitzen zwei mürrisch aussehende Gestalten,\nan dem rechten sitzt ein alter Mann. Am ende des Raumes befindet sich eine Holztür\n\n""")
     while any(v["active"] for v in startraummenu.values()):
         try:
-            user_wahl = input(menustartraum()).strip()
+            user_wahl = input(menu_builder(startraummenu)).strip()
             if user_wahl == "1":
-                #togglestartraummenu("2")
                 print("Du gehst zum alten Mann...")
                 return alterMann(1)
             elif user_wahl == "2":
-                togglestartraummenu("3")
+                menu_toggle(startraummenu, "2")
                 print("Du gehst zu den zwei Gestalten...")
                 return zweigestalten(1)
             elif user_wahl == "3":
                 print("Du gehst zur Türe und öffnest sie...")
                 return raum2()
+            elif user_wahl == "0":
+                print("Nett gedacht, aber keine valide Eingabe, bitte nur 1-3 verwenden")
         except Exception as e:
             print(e)
-            continue
 
 def raum2():
     print("platzhalter")

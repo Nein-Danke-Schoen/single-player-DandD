@@ -1,11 +1,5 @@
-Karte erstellen
-Charakter erstellen
-Items erstellen
-Geschichte(eventuell)
-Gegner 
-NPC's
-
-Karte:
-[[Karte]]
-
-Charakter:
+Dinge die noch gemacht weren sollten:
+    #-Menu-builder
+    -Items und Waffen in eine seperate datei
+    -Für NPC'S eine seperate datei
+    #-Dialogdatei Optimieren
